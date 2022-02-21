@@ -14,21 +14,21 @@ import {
 } from './redux/reducer/ui';
 
 function App() {
-  const loading = useSelector(selectFullscreenLoading);
-  const notification = useSelector(selectNotification);
-  const notifyRef = useRef(null);
+  // const loading = useSelector(selectFullscreenLoading);
+  // const notification = useSelector(selectNotification);
+  // const notifyRef = useRef(null);
 
-  useEffect(() => {
-    if (!notifyRef.current) return;
-    notifyRef.current.showSnackbar();
-  }, [notification]);
+  // useEffect(() => {
+  //   if (!notifyRef.current) return;
+  //   notifyRef.current.showSnackbar();
+  // }, [notification]);
 
 
 
 
   return (
     <>
-      {loading && <LoadingFullScreen />}
+      {/* {loading && <LoadingFullScreen />}
       {notification && (
         <Snackbar
           message={notification.message}
@@ -50,7 +50,8 @@ function App() {
         </Route>
 
         <Route path='/' component={Home} />
-      </Switch>
+      </Switch> */}
+      <div>Hello</div>
     </>
   );
 }

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { SOCKET_CHAT_HOST } from '../common/constant';
 import { getCookie, setCookie } from '../common/functions';
 const axiosApi = axios.create({
-  baseURL: "https://backendwebchat.herokuapp.com",
+  baseURL: SOCKET_CHAT_HOST,
   // withCredentials: true,
   responseType: 'json',
   timeout: 100000,
