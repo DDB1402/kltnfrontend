@@ -1,8 +1,8 @@
 // const SOCKET_CHAT_HOST = 'https://chat-app-socket-cn11.herokuapp.com';
-const SOCKET_CHAT_HOST = "https://backendwebchat.herokuapp.com";
+// const SOCKET_CHAT_HOST = "https://backendchatappkltn.herokuapp.com";
 
-// const SOCKET_CHAT_HOST = 'http://localhost:3001';
-const PEERJS_SERVER = "peerjs-cn11-server.herokuapp.com";
+const SOCKET_CHAT_HOST = "https://backendchatappkltn.herokuapp.com";
+const PEERJS_SERVER = "peerserverkltn.herokuapp.com";
 
 const SOCKET_NAMESPACE = {
   USER: "/USER",
