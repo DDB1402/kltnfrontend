@@ -17,7 +17,7 @@
             visibility: hidden;
         }
         input[type="file"]::before {
-            content: "Choose your avatar";
+            content: "Chọn ảnh đại diện";
             display: inline-block;
             background-color: $color-primary-dark;
             color: #fff;

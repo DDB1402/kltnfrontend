@@ -1,28 +1,28 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import * as yup from 'yup';
-import man from '../../../assets/images/man.png';
-import woman from '../../../assets/images/woman.png';
-import Helmet from '../../components/Helmet';
-import Layout from '../../components/Layout';
-import Checkbox from '../../shared/Checkbox';
-import Grid from '../../shared/Grid';
-import SVGIcon from '../../shared/SVGIcon';
-import TextField from '../../shared/TextField';
-import Upload from '../../shared/Upload';
-import { useDispatch } from 'react-redux';
-import { SignupAction } from '../../../redux/reducer/signup';
-import { useSelector } from 'react-redux';
+import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import * as yup from "yup";
+import man from "../../../assets/images/man.png";
+import woman from "../../../assets/images/woman.png";
+import Helmet from "../../components/Helmet";
+import Layout from "../../components/Layout";
+import Checkbox from "../../shared/Checkbox";
+import Grid from "../../shared/Grid";
+import SVGIcon from "../../shared/SVGIcon";
+import TextField from "../../shared/TextField";
+import Upload from "../../shared/Upload";
+import { useDispatch } from "react-redux";
+import { SignupAction } from "../../../redux/reducer/signup";
+import { useSelector } from "react-redux";
 
 const defaultValues = {
-  email: '',
-  name: '',
-  phone: '',
+  email: "",
+  name: "",
+  phone: "",
   sex: 0,
-  password: '',
-  retypePassword: '',
+  password: "",
+  retypePassword: "",
 };
 
 function SignUp({ history }) {
@@ -38,20 +38,20 @@ function SignUp({ history }) {
     .object({
       email: yup
         .string()
-        .required('Please enter your email')
-        .email('Email is not valid'),
-      name: yup.string().required('Please enter your name'),
+        .required("Please enter your email")
+        .email("Email is not valid"),
+      name: yup.string().required("Please enter your name"),
       phone: yup
         .string()
-        .required('Please enter your phone number')
+        .required("Please enter your phone number")
         .matches(
           /(84|0[1|3|5|7|8|9])+([0-9]{8})\b/,
-          'Phone number is not valid'
+          "Phone number is not valid"
         ),
-      password: yup.string().required('Please enter password'),
+      password: yup.string().required("Please enter password"),
       retypePassword: yup
         .string()
-        .oneOf([yup.ref('password')], 'Retype Password must be equal Password'),
+        .oneOf([yup.ref("password")], "Retype Password must be equal Password"),
     })
     .required();
 
@@ -60,7 +60,7 @@ function SignUp({ history }) {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: 'onSubmit',
+    mode: "onSubmit",
     defaultValues,
     resolver: yupResolver(schema),
   });
@@ -68,50 +68,50 @@ function SignUp({ history }) {
   const handleSignUp = (values) => {
     setIsSubmitted(true);
     const signupData = new FormData();
-    signupData.append('singleImage', avatar);
+    signupData.append("singleImage", avatar);
 
     for (const [key, value] of Object.entries(values)) {
       signupData.append(key, value);
     }
 
-    signupData.delete('retypePassword');
+    signupData.delete("retypePassword");
 
     dispatch(SignupAction.signup(signupData));
   };
 
   useEffect(() => {
-    if (isSubmitted && !errorSignup) history.push('/login');
+    if (isSubmitted && !errorSignup) history.push("/login");
   }, [isSubmitted, errorSignup, history]);
 
   return (
-    <Helmet title='Signup'>
+    <Helmet title="Signup">
       <Layout>
-        <div className='sign-in'>
-          <div className='sign-in__top'>
-            <h1>Sign up to Belo</h1>
+        <div className="sign-in">
+          <div className="sign-in__top">
+            <h1>Đăng kí để sử dụng Belo</h1>
             <small>
-              Already to account?
-              <Link to='/login'>Login in</Link>
+              Đã có tài khoản?
+              <Link to="/login">Đăng nhập</Link>
             </small>
           </div>
-          <form className='sign-in__form' onSubmit={handleSubmit(handleSignUp)}>
-            <div className='sign-in__form__content'>
+          <form className="sign-in__form" onSubmit={handleSubmit(handleSignUp)}>
+            <div className="sign-in__form__content">
               <Upload
                 image={isMale ? man : woman}
-                accept='image/png, image/jpeg, image/jpg'
+                accept="image/png, image/jpeg, image/jpg"
                 onUpload={(file) => setAvatar(file)}
               />
               <div>
-                <div className='sign-in__form__content__title'>Gender</div>
+                <div className="sign-in__form__content__title">Giới tính</div>
                 <Grid col={2}>
                   <Controller
                     control={control}
-                    name='sex'
+                    name="sex"
                     defaultValue={0}
                     render={({ field: { onChange, value } }) => (
                       <>
                         <Checkbox
-                          type='radio'
+                          type="radio"
                           checked={isMale}
                           value={0}
                           onChange={(e) => {
@@ -119,10 +119,10 @@ function SignUp({ history }) {
                             setIsMale(true);
                           }}
                         >
-                          Male
+                          Nam
                         </Checkbox>
                         <Checkbox
-                          type='radio'
+                          type="radio"
                           checked={!isMale}
                           value={1}
                           onChange={(e) => {
@@ -130,7 +130,7 @@ function SignUp({ history }) {
                             setIsMale(false);
                           }}
                         >
-                          Female
+                          Nữ
                         </Checkbox>
                       </>
                     )}
@@ -139,12 +139,12 @@ function SignUp({ history }) {
               </div>
               <Controller
                 control={control}
-                name='email'
+                name="email"
                 render={({ field: { onChange, name } }) => (
-                  <div className='input-field'>
+                  <div className="input-field">
                     <TextField
-                      type='text'
-                      label='Email'
+                      type="text"
+                      label="Email"
                       inputChange={(e) => {
                         onChange(e);
                       }}
@@ -152,7 +152,7 @@ function SignUp({ history }) {
                       error={!!errors[name]}
                     />
                     {errors && errors[name] && (
-                      <div className='input-field__error'>
+                      <div className="input-field__error">
                         {errors[name].message}
                       </div>
                     )}
@@ -161,12 +161,12 @@ function SignUp({ history }) {
               />
               <Controller
                 control={control}
-                name='name'
+                name="name"
                 render={({ field: { onChange, name } }) => (
-                  <div className='input-field'>
+                  <div className="input-field">
                     <TextField
-                      type='text'
-                      label='name'
+                      type="text"
+                      label="Tên"
                       inputChange={(e) => {
                         onChange(e);
                       }}
@@ -174,7 +174,7 @@ function SignUp({ history }) {
                       error={!!errors[name]}
                     />
                     {errors && errors[name] && (
-                      <div className='input-field__error'>
+                      <div className="input-field__error">
                         {errors[name].message}
                       </div>
                     )}
@@ -183,19 +183,19 @@ function SignUp({ history }) {
               />
               <Controller
                 control={control}
-                name='phone'
+                name="phone"
                 render={({ field: { onChange, name } }) => (
-                  <div className='input-field'>
+                  <div className="input-field">
                     <TextField
-                      type='text'
-                      label='phone number'
+                      type="text"
+                      label="Số điện thoại"
                       inputChange={(e) => {
                         onChange(e);
                       }}
                       error={!!errors[name]}
                     />
                     {errors && errors[name] && (
-                      <div className='input-field__error'>
+                      <div className="input-field__error">
                         {errors[name].message}
                       </div>
                     )}
@@ -204,19 +204,19 @@ function SignUp({ history }) {
               />
               <Controller
                 control={control}
-                name='password'
+                name="password"
                 render={({ field: { onChange, name } }) => (
-                  <div className='input-field'>
+                  <div className="input-field">
                     <TextField
-                      type='password'
-                      label='password'
+                      type="password"
+                      label="Mật khẩu"
                       inputChange={(e) => {
                         onChange(e);
                       }}
                       error={!!errors[name]}
                     />
                     {errors && errors[name] && (
-                      <div className='input-field__error'>
+                      <div className="input-field__error">
                         {errors[name].message}
                       </div>
                     )}
@@ -225,12 +225,12 @@ function SignUp({ history }) {
               />
               <Controller
                 control={control}
-                name='retypePassword'
+                name="retypePassword"
                 render={({ field: { onChange, name } }) => (
-                  <div className='input-field'>
+                  <div className="input-field">
                     <TextField
-                      type='password'
-                      label='retype password'
+                      type="password"
+                      label="Nhập lại mật khẩu"
                       inputChange={(e) => {
                         onChange(e);
                       }}
@@ -238,7 +238,7 @@ function SignUp({ history }) {
                       error={!!errors[name]}
                     />
                     {errors && errors[name] && (
-                      <div className='input-field__error'>
+                      <div className="input-field__error">
                         {errors[name].message}
                       </div>
                     )}
@@ -248,20 +248,16 @@ function SignUp({ history }) {
             </div>
             {errorSignup && (
               <div
-                className='input-field__error'
-                style={{ textAlign: 'center', marginBottom: '1rem' }}
+                className="input-field__error"
+                style={{ textAlign: "center", marginBottom: "1rem" }}
               >
                 {errorSignup}
               </div>
             )}
-            <button className='btn' type='submit'>
-              Sign up
+            <button className="btn" type="submit">
+              Đăng ký
             </button>
           </form>
-          <button className='btn btn--white'>
-            <SVGIcon name='google' />
-            <span>Login with google</span>
-          </button>
         </div>
       </Layout>
     </Helmet>
