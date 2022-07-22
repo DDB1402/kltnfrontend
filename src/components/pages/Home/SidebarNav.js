@@ -86,7 +86,7 @@ const SidebarNav = (props) => {
             setOpenProfile(false);
           }}
         >
-          <Profile
+          <UpdateProfile
             profile={userProfile}
             onClose={() => {
               setOpenProfile(false);
