@@ -1,7 +1,7 @@
-import { createActions, createReducer } from 'reduxsauce';
-import { createSelector } from 'reselect';
-import { MESSAGE_TYPE } from '../../common/constant';
-import { transformListMessages } from '../../common/functions';
+import { createActions, createReducer } from "reduxsauce";
+import { createSelector } from "reselect";
+import { MESSAGE_TYPE } from "../../common/constant";
+import { transformListMessages } from "../../common/functions";
 
 const CONVERSATION_INITIAL_STATE = {
   listConversation: [],
@@ -12,22 +12,22 @@ const CONVERSATION_INITIAL_STATE = {
 
 const { Types, Creators } = createActions({
   getConversation: null,
-  getConversationSucceed: ['payload'],
-  getSpecificConversation: ['payload'],
-  getSpecificConversationSucceed: ['payload'],
+  getConversationSucceed: ["payload"],
+  getSpecificConversation: ["payload"],
+  getSpecificConversationSucceed: ["payload"],
 
-  addUserToConversation: ['payload'],
-  addUserToConversationSucceed: ['payload'],
+  addUserToConversation: ["payload"],
+  addUserToConversationSucceed: ["payload"],
 
-  onUserAdd: ['payload'],
-  onAddedToConversation: ['payload'],
+  onUserAdd: ["payload"],
+  onAddedToConversation: ["payload"],
 
-  setConversationLoading: ['payload'],
-  setCurrentConversation: ['payload'],
+  setConversationLoading: ["payload"],
+  setCurrentConversation: ["payload"],
 
-  createGroupChat: ['payload'],
+  createGroupChat: ["payload"],
 
-  updateLastMessage: ['payload'],
+  updateLastMessage: ["payload"],
 });
 
 //selector
@@ -89,7 +89,7 @@ const handleUpdateLastMessage = (state, { payload }) => {
   listConversation = listConversation.map((conversation) => {
     if (
       conversation?.id_room?.toString() === data?.id_conversation?.toString() ||
-      ''
+      ""
     ) {
       return {
         ...conversation,
@@ -97,8 +97,9 @@ const handleUpdateLastMessage = (state, { payload }) => {
         last_message_type: data._type,
         last_message:
           data._type === MESSAGE_TYPE.ICON || data._type === MESSAGE_TYPE.IMAGE
-            ? 'Ảnh mới'
+            ? "Ảnh mới"
             : data.content,
+        last_message_time: new Date().toISOString(),
       };
     } else return conversation;
   });

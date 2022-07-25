@@ -150,7 +150,47 @@ const handleInsertPreviewMessages = (state, { payload }) => {
       });
     });
   }
-  // console.log(payload);
+  if(payload._type === MESSAGE_TYPE.FILE){
+	payload.listFiles.forEach((item) => {
+		newMessage.push({
+		  _type: payload._type,
+		  id_user: payload.idUser,
+		  avatar: payload.avatar,
+		  sex: payload.sex,
+		  content: payload.content,
+		  url: item.src,
+		  message_create_at: Date.now(),
+		  id_message: v4(),
+		  status: MESSAGE_STATUS.PENDING,
+		});
+	  });
+  }
+  if(payload._type === MESSAGE_TYPE.TEXT_AND_FILE){
+	newMessage.push({
+		_type: MESSAGE_TYPE.TEXT,
+		id_user: payload.idUser,
+		avatar: payload.avatar,
+		sex: payload.sex,
+		content: payload.content,
+		url: null,
+		message_create_at: Date.now(),
+		id_message: v4(),
+		status: MESSAGE_STATUS.PENDING,
+	  });
+	  payload.listFiles.forEach((item) => {
+		newMessage.push({
+		  _type: MESSAGE_TYPE.FILE,
+		  id_user: payload.idUser,
+		  avatar: payload.avatar,
+		  sex: payload.sex,
+		  content: payload.content,
+		  url: item.src,
+		  message_create_at: Date.now(),
+		  id_message: v4(),
+		  status: MESSAGE_STATUS.PENDING,
+		});
+	  });
+  }
   if (payload.type === MESSAGE_TYPE.ICON) {
     newMessage.push({
       _type: MESSAGE_TYPE.ICON,

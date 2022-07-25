@@ -3,21 +3,21 @@ import {
   MESSAGE_STATUS,
   MESSAGE_TYPE,
   NOTIFICATION_STATUS,
-} from './constant';
+} from "./constant";
 
 export function setCookie(cname, cvalue, exdays) {
   var d = new Date();
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-  var expires = 'expires=' + d.toUTCString();
-  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+  var expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
 export function getCookie(cname) {
-  var name = cname + '=';
-  var ca = document.cookie.split(';');
+  var name = cname + "=";
+  var ca = document.cookie.split(";");
   for (var i = 0; i < ca.length; i++) {
     var c = ca[i];
-    while (c.charAt(0) === ' ') {
+    while (c.charAt(0) === " ") {
       c = c.substring(1);
     }
     if (c.indexOf(name) === 0) {
@@ -28,16 +28,16 @@ export function getCookie(cname) {
 }
 
 export function parseJwt(token) {
-  var base64Url = token.split('.')[1];
-  if(!base64Url) return null;
-  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  var base64Url = token.split(".")[1];
+  if (!base64Url) return null;
+  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
   var jsonPayload = decodeURIComponent(
     atob(base64)
-      .split('')
+      .split("")
       .map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
       })
-      .join('')
+      .join("")
   );
 
   return JSON.parse(jsonPayload);
@@ -91,13 +91,21 @@ export const transformListMessages = (listMessages) => {
     }, []);
 };
 
-export const getTypeMessage = (text = '', images = [], icon = null) => {
+export const getTypeMessage = (
+  text = "",
+  images = [],
+  listFiles = [],
+  icon = null
+) => {
   if (icon) return MESSAGE_TYPE.ICON;
-  if (text !== '') {
+  if (text !== "") {
     if (images?.length > 0) return MESSAGE_TYPE.TEXT_AND_IMAGE;
+    if (listFiles?.length > 0) return MESSAGE_TYPE.TEXT_AND_FILE;
     return MESSAGE_TYPE.TEXT;
   } else {
     if (images?.length > 0) return MESSAGE_TYPE.IMAGE;
+
+    if (listFiles.length > 0) return MESSAGE_TYPE.FILE;
     return -1;
   }
 };
@@ -170,7 +178,7 @@ export const getContentNotification = (author, dataNotification) => {
   }
 
   return {
-    content: 'Bạn có một thông báo mới 🎁',
+    content: "Bạn có một thông báo mới 🎁",
     imgSrc: dataNotification.ownerAvatar,
     createAt: dataNotification.createAt,
   };

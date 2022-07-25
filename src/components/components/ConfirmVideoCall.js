@@ -40,7 +40,8 @@ export const ConfirmVideoCall = (props) => {
           className="confirmButton"
           onClick={() => {
             if (currentCallInfo.newIdRoom)
-              history.push(`/call/${currentCallInfo.newIdRoom}`);
+              window.open(`#/call/${currentCallInfo.newIdRoom}`);
+            //   history.push(`/call/${currentCallInfo.newIdRoom}`);
           }}
         >
           <SVGIcon name="phone" width="20" height="20" /> Confirm

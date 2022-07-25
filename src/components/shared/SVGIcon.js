@@ -32,6 +32,8 @@ import { ReactComponent as CallCamera } from '../../assets/icons/call-camera.svg
 import { ReactComponent as OffVideo } from '../../assets/icons/off-video.svg';
 import { ReactComponent as CallDisconnect } from '../../assets/icons/call-disconnect.svg';
 import { ReactComponent as StopShare } from '../../assets/icons/stop-share.svg';
+import { ReactComponent as Download } from '../../assets/icons/download.svg';
+
 
 const mapIcon = {
   google: Google,
@@ -64,7 +66,8 @@ const mapIcon = {
   callcamera:CallCamera,
   offvideo:OffVideo,
   calldisconnect:CallDisconnect,
-  stopshare:StopShare
+  stopshare:StopShare,
+  download:Download
 };
 
 const SVGIcon = ({ name, width = '16px', height = width, ...rest }) => {

@@ -22,7 +22,6 @@ import SpinLoading from "../shared/SpinLoading";
 
 const ChatList = ({ author }) => {
   const contentRef = useRef();
-  const newMessageBreakPointRef = useRef();
   const [currentLatestMessageIndex, setCurrentLatestMessageIndex] =
     useState(null);
   let listMessages = useSelector(selectMessages);
@@ -168,6 +167,8 @@ const ChatList = ({ author }) => {
                           type={message._type}
                           createTime={time}
                           img={message.url}
+						  url={message.url}
+						  content={message.content}
                           status={message.status}
                           icon={message.icon}
                           id_message={message.idMessage}

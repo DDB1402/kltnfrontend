@@ -981,7 +981,8 @@ const ChatVideo = () => {
               id_room: id_conversation,
               socketId: CALL_SOCKET.id,
             });
-            history.push("/home/message");
+			window.open('','_self').close()
+            // history.push("/home/message");
           }}
         >
           <SVGIcon

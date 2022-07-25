@@ -1,0 +1,24 @@
+.file {
+  max-width: 300px;
+  display: flex;
+  justify-content: center;
+
+  &__name {
+    @include flex(center, flex-start);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &__download {
+    @include flex(center, center);
+    width: 10%;
+	padding: 10px;
+	margin-left: 5px;
+
+	&:hover{
+		border-radius: 5px;
+		background-color: #e8eaef;
+		border-radius: 50%;
+	}
+  }
+}
