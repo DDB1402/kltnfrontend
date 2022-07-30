@@ -5,6 +5,7 @@ import {
   getSpecificConversation,
   addUsersToConversation,
   createGroupChat,
+  deleteUser,
 } from "../../services/apiMap";
 import { ConversationAction } from "../reducer/conversation";
 import { UiActions } from "../reducer/ui";
@@ -70,6 +71,19 @@ export const ConversationSaga = {
       yield put(
         UiActions.notificationFailed({ message: "Tạo phòng thất bại" })
       );
+    }
+  },
+  *deleteUser({ payload }) {
+    try {
+      const response = yield call(() => deleteUser({ ...payload }));
+      if (response.status === HttpStatusCode.SUCCESS) {
+        yield put(
+          UiActions.notificationSuccess({ message: "Xóa user thành công" })
+        );
+        // yield put(ConversationAction.deleteUserSucceed(response.data));
+      }
+    } catch (err) {
+      yield put(UiActions.notificationFailed({ message: "Xóa user thất bại" }));
     }
   },
 };

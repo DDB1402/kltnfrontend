@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Route, useRouteMatch } from 'react-router';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, useRouteMatch } from "react-router";
 import {
   CONVERSATION_TYPE,
   MESSAGE_TYPE,
   SOCKET_ON_ACTIONS,
-} from '../../../common/constant';
-import { useSocketConnection } from '../../../hooks/useSocketConnection';
-import { ConversationAction } from '../../../redux/reducer/conversation';
-import { UserAction } from '../../../redux/reducer/user';
+} from "../../../common/constant";
+import { useSocketConnection } from "../../../hooks/useSocketConnection";
+import { ConversationAction } from "../../../redux/reducer/conversation";
+import { UserAction } from "../../../redux/reducer/user";
 import {
   CONVERSATION_SOCKET,
   NOTIFICATION_SOCKET,
-} from '../../../socket/socket';
-import Helmet from '../../components/Helmet';
-import Main from './Main';
-import SidebarNav from './SidebarNav';
-import Modal from '../../shared/Modal';
-import { ConfirmVideoCall } from '../../components/ConfirmVideoCall';
-import newMessageAudioMp3 from '../../../assets/sounds/newMessage.mp3';
-import { ToastContainer, toast } from 'react-toastify';
+} from "../../../socket/socket";
+import Helmet from "../../components/Helmet";
+import Main from "./Main";
+import SidebarNav from "./SidebarNav";
+import Modal from "../../shared/Modal";
+import { ConfirmVideoCall } from "../../components/ConfirmVideoCall";
+import newMessageAudioMp3 from "../../../assets/sounds/newMessage.mp3";
+import { ToastContainer, toast } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css';
-import { MessageNotification } from './MessageNotification';
-import { NotificationActions } from '../../../redux/reducer/notification';
+import "react-toastify/dist/ReactToastify.css";
+import { MessageNotification } from "./MessageNotification";
+import { NotificationActions } from "../../../redux/reducer/notification";
 function Home(props) {
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
@@ -86,38 +86,79 @@ function Home(props) {
               break;
             }
           }
-// console.log(data);
+		  
           toast(
             <MessageNotification
-              id_room={selectedConversation ? selectedConversation.id_room : ''}
+              id_room={selectedConversation ? selectedConversation.id_room : ""}
               sender_name={data.name}
               room_name={
                 selectedConversation
-                  ? +selectedConversation.type ===
-                    CONVERSATION_TYPE.GROUP
+                  ? +selectedConversation.type === CONVERSATION_TYPE.GROUP
                     ? selectedConversation.title
                     : selectedConversation.nextUserName
-                  : ''
+                  : ""
               }
               content={
                 _type == MESSAGE_TYPE.ICON || _type == MESSAGE_TYPE.IMAGE
-                  ? 'Ảnh mới'
+                  ? "Ảnh mới"
                   : _type == MESSAGE_TYPE.TEXT
                   ? _data.content
-                  : ''
+                  : ""
               }
             />,
             {
-              position: 'top-center',
+              position: "top-center",
               autoClose: 3000,
               hideProgressBar: true,
               closeOnClick: false,
               pauseOnHover: true,
-              toastId: 'messageNotification',
+              toastId: "messageNotification",
               // draggable: true,
               // progress: undefined,
             }
           );
+        }
+      });
+      CONVERSATION_SOCKET.on(SOCKET_ON_ACTIONS.EMIT_DELETE_USER, (res) => {
+        const { id_deleted_user, id_room, sender } = res;
+        let selectedConversation = null;
+
+        for (let i = 0; i < listConversation.length; i++) {
+          if (listConversation[i].id_room.toString() === id_room.toString()) {
+            selectedConversation = listConversation[i];
+            break;
+          }
+        }
+
+        if (sender) {
+          toast(
+            <MessageNotification
+              id_room={selectedConversation ? selectedConversation.id_room : ""}
+              sender_name={sender?.name || ""}
+              room_name={
+                selectedConversation
+                  ? +selectedConversation.type === CONVERSATION_TYPE.GROUP
+                    ? selectedConversation.title
+                    : selectedConversation.nextUserName
+                  : ""
+              }
+              content={"Xóa người khỏi nhóm"}
+            />,
+            {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: true,
+              closeOnClick: false,
+              pauseOnHover: true,
+              toastId: "messageNotification",
+              // draggable: true,
+              // progress: undefined,
+            }
+          );
+		  dispatch(ConversationAction.listenDeleteUser({
+			id_deleted_user,
+			id_room
+		  }))
         }
       });
     }
@@ -167,8 +208,8 @@ function Home(props) {
   }, [dispatch]);
 
   return (
-    <Helmet title='Home'>
-      <div className='container'>
+    <Helmet title="Home">
+      <div className="container">
         <SidebarNav />
         <Route path={`${path}/message/:idConversation`} component={Main} />
         {currentCallInfo && (
@@ -181,7 +222,7 @@ function Home(props) {
         )}
 
         <ToastContainer
-          position='top-center'
+          position="top-center"
           autoClose={5000}
           hideProgressBar={false}
           newestOnTop={false}

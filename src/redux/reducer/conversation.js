@@ -1,7 +1,7 @@
 import { createActions, createReducer } from "reduxsauce";
 import { createSelector } from "reselect";
 import { MESSAGE_TYPE } from "../../common/constant";
-import { transformListMessages } from "../../common/functions";
+// import { transformListMessages } from "../../common/functions";
 
 const CONVERSATION_INITIAL_STATE = {
   listConversation: [],
@@ -28,8 +28,13 @@ const { Types, Creators } = createActions({
   createGroupChat: ["payload"],
 
   updateLastMessage: ["payload"],
-});
 
+  deleteUser: ["payload"],
+  deleteUserSucceed: ["payload"],
+
+  listenDeleteUser: ["payload"],
+});
+console.log(Types);
 //selector
 const selectSelf = (state) => state.conversation;
 
@@ -131,6 +136,41 @@ const handleAddGroupChat = (state, payload) => {
   return state;
 };
 
+const handleDeleteUserSucceed = (state, { payload }) => {
+  const { id_deleted_user } = payload;
+  return {
+    ...state,
+    mainConversationInfo: {
+      ...state.mainConversationInfo,
+      listUser: state.mainConversationInfo.listUser.filter(
+        (user) => user.id_user !== id_deleted_user
+      ),
+    },
+  };
+};
+
+const handleListenDeleteUser = (state, { payload }) => {
+  let mainConversation = state.mainConversationInfo;
+  const { id_deleted_user, id_room } = payload;
+
+  if (
+    mainConversation &&
+    id_room?.toString() ===
+      mainConversation.conversationInfo?.id_room?.toString()
+  ) {
+	return {
+		...state,
+		mainConversationInfo: {
+		  ...state.mainConversationInfo,
+		  listUser: state.mainConversationInfo.listUser.filter(
+			(user) => user.id_user !== id_deleted_user
+		  ),
+		},
+	  };
+  }
+  else return state;
+};
+
 export const ConversationTypes = Types;
 export const ConversationAction = Creators;
 
@@ -147,4 +187,6 @@ export const ConversationReducer = createReducer(CONVERSATION_INITIAL_STATE, {
   [Types.ON_ADDED_TO_CONVERSATION]: onAddedToConversation,
   [Types.CREATE_GROUP_CHAT]: handleAddGroupChat,
   [Types.UPDATE_LAST_MESSAGE]: handleUpdateLastMessage,
+  [Types.DELETE_USER_SUCCEED]: handleDeleteUserSucceed,
+  [Types.LISTEN_DELETE_USER]: handleListenDeleteUser,
 });

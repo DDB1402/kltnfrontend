@@ -11,6 +11,7 @@ export const MessageSaga = {
         yield put(MessageActions.sendMessageSucceed(response.data));
       }
     } catch (error) {
+	  console.log(payload.idPreview);
       yield put(MessageActions.sendMessageFailed(payload.idPreview));
     }
   },

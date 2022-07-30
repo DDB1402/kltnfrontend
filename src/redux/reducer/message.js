@@ -250,6 +250,7 @@ const handleSendMessageSucceed = (state, { payload }) => {
 };
 
 const handleSendMessageFailed = (state, { payload: idPreview }) => {
+  console.log(state.previewMessages[idPreview]);
   const messageError = state.previewMessages[idPreview];
   messageError.map((item) => (item.status = MESSAGE_STATUS.ERROR));
   state.messages.push(...messageError);
@@ -259,7 +260,7 @@ const handleSendMessageFailed = (state, { payload: idPreview }) => {
   return {
     ...state,
     messages: [...state.messages],
-    previewMessages: [...state.previewMessages],
+    previewMessages: [],
   };
 };
 

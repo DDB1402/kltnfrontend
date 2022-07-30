@@ -29,6 +29,7 @@ import {
 } from "../../../common/constant";
 import { SearchFriend } from "../../components/SearchFriend";
 import { CONVERSATION_SOCKET } from "../../../socket/socket";
+import ListUser from "../../components/ListUser";
 
 const Main = ({ match }) => {
   const userInfo = useSelector((state) => state.auth.user);
@@ -36,6 +37,7 @@ const Main = ({ match }) => {
     params: { idConversation },
   } = match;
   const [addUserPopupOpen, setAddUserPopupOpen] = useState(false);
+  const [listUserPopupOpen, setListUserPopupOpen] = useState(false);
   useRoomChat(idConversation);
 
   useEffect(() => {
@@ -51,14 +53,10 @@ const Main = ({ match }) => {
 
   const { conversationInfo = {}, listUser = [] } =
     useSelector(selectMainConversation) || {};
-
   const { listImages, setAddListImages, deleteImage, clearImages } =
     useUploadImages();
   const { listFiles, setAddListFiles, deleteFile, clearFiles } =
     useUploadFiles();
-  console.log(listFiles);
-
-  console.log(listImages);
 
   const callVideo = () => {
     const newIdRoom = v4();
@@ -82,7 +80,7 @@ const Main = ({ match }) => {
       ConversationAction.getSpecificConversation({ id: idConversation })
     );
     // dispatch(ConversationAction.setCurrentConversation({}))
-  }, [idConversation]);
+  }, [dispatch, idConversation]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -136,7 +134,7 @@ const Main = ({ match }) => {
     //cleanup
     inputRef.current.value = "";
     clearImages();
-	clearFiles();
+    clearFiles();
   };
 
   const isLoading = useSelector(selectMessageLoading);
@@ -167,36 +165,68 @@ const Main = ({ match }) => {
           />
 
           {conversationInfo.type === CONVERSATION_TYPE.GROUP ? (
-            <Popup
-              isOpen={addUserPopupOpen}
-              type={"popover_add_user_box search_friend_wrapper"}
-              root={
-                <SVGIcon
-                  name="addUser"
-                  width="30"
-                  height="30"
-                  onClick={() => {
-                    setAddUserPopupOpen((prev) => !prev);
-                  }}
-                />
-              }
-            >
-              <>
-                <SVGIcon
-                  name="close"
-                  width="25"
-                  height="25"
-                  className="closeIcon"
-                  onClick={() => {
-                    setAddUserPopupOpen((prev) => !prev);
-                  }}
-                />
-                <div className="">
-                  <p className="title">Add user</p>
-                  <SearchFriend />
-                </div>
-              </>
-            </Popup>
+            <>
+              <Popup
+                isOpen={addUserPopupOpen}
+                type={"popover_add_user_box search_friend_wrapper"}
+                root={
+                  <SVGIcon
+                    name="addUser"
+                    width="30"
+                    height="30"
+                    onClick={() => {
+                      setAddUserPopupOpen((prev) => !prev);
+                    }}
+                  />
+                }
+              >
+                <>
+                  <SVGIcon
+                    name="close"
+                    width="25"
+                    height="25"
+                    className="closeIcon"
+                    onClick={() => {
+                      setAddUserPopupOpen((prev) => !prev);
+                    }}
+                  />
+                  <div className="">
+                    <p className="title">Add user</p>
+                    <SearchFriend />
+                  </div>
+                </>
+              </Popup>
+              <Popup
+                isOpen={listUserPopupOpen}
+                type={"popover_add_user_box search_friend_wrapper"}
+                root={
+                  <SVGIcon
+                    name="multipleUser"
+                    width="30"
+                    height="30"
+                    onClick={() => {
+                      setListUserPopupOpen((prev) => !prev);
+                    }}
+                  />
+                }
+              >
+                <>
+                  <SVGIcon
+                    name="close"
+                    width="25"
+                    height="25"
+                    className="closeIcon"
+                    onClick={() => {
+                      setListUserPopupOpen((prev) => !prev);
+                    }}
+                  />
+				  <div className="" style={{width:"100%"}}>
+                    <p className="title">List user</p>
+                    <ListUser idConversation={idConversation}/>
+                  </div>
+                </>
+              </Popup>
+            </>
           ) : (
             <></>
           )}

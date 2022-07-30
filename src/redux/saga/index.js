@@ -43,6 +43,10 @@ export default function* rootSaga() {
       ConversationTypes.CREATE_GROUP_CHAT,
       ConversationSaga.createGroupChat
     ),
+	takeEvery(
+		ConversationTypes.DELETE_USER,
+		ConversationSaga.deleteUser
+	),
 
     //message
     takeLatest(MessageTypes.GET_MESSAGES, MessageSaga.getMessages),
