@@ -49,7 +49,7 @@ export const AuthSaga = {
       yield all([
         put(UiActions.setLoading(false)),
         put(
-          UiActions.handleNotificationWaring({
+          UiActions.notificationWarning({
             message: 'Vui lòng đăng nhập lại!',
           })
         ),
