@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/kltnfrontend/static/css/main.adf10851.chunk.css",
-    "main.js": "/kltnfrontend/static/js/main.26aadce5.chunk.js",
-    "main.js.map": "/kltnfrontend/static/js/main.26aadce5.chunk.js.map",
+    "main.js": "/kltnfrontend/static/js/main.f6e12e41.chunk.js",
+    "main.js.map": "/kltnfrontend/static/js/main.f6e12e41.chunk.js.map",
     "runtime-main.js": "/kltnfrontend/static/js/runtime-main.f9fa5c46.js",
     "runtime-main.js.map": "/kltnfrontend/static/js/runtime-main.f9fa5c46.js.map",
     "static/css/2.f4c56af9.chunk.css": "/kltnfrontend/static/css/2.f4c56af9.chunk.css",
@@ -54,6 +54,6 @@
     "static/css/2.f4c56af9.chunk.css",
     "static/js/2.cf174116.chunk.js",
     "static/css/main.adf10851.chunk.css",
-    "static/js/main.26aadce5.chunk.js"
+    "static/js/main.f6e12e41.chunk.js"
   ]
 }
