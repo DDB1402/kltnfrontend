@@ -10,9 +10,7 @@ import { NotificationActions } from '../../redux/reducer/notification';
 import Avatar from '../shared/Avatar';
 
 const NotificationItem = ({ item, ...rest }) => {
-  console.log('🚀 ~ item', item);
   const author = useSelector(selectUser);
-  console.log('🚀 ~ author', author);
   const contentNotification = getContentNotification(author, item);
   const dispatch = useDispatch();
 
@@ -30,6 +28,7 @@ const NotificationItem = ({ item, ...rest }) => {
     : woman;
 
   const handleAccept = (item) => {
+	console.log(item);
     dispatch(
       NotificationActions.answerFriendRequest({
         status: NOTIFICATION_STATUS.FULFILLED,

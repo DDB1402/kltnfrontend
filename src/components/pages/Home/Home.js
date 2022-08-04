@@ -86,7 +86,7 @@ function Home(props) {
               break;
             }
           }
-		  
+
           toast(
             <MessageNotification
               id_room={selectedConversation ? selectedConversation.id_room : ""}
@@ -155,10 +155,12 @@ function Home(props) {
               // progress: undefined,
             }
           );
-		  dispatch(ConversationAction.listenDeleteUser({
-			id_deleted_user,
-			id_room
-		  }))
+          dispatch(
+            ConversationAction.listenDeleteUser({
+              id_deleted_user,
+              id_room,
+            })
+          );
         }
       });
     }
@@ -192,9 +194,13 @@ function Home(props) {
       NOTIFICATION_SOCKET.on(
         SOCKET_ON_ACTIONS.EMIT_NOTIFICATION,
         (newNotification) => {
+          console.log("nn", newNotification);
           if (newNotification)
             dispatch(
-              NotificationActions.addNewNotification({ newNotification })
+              NotificationActions.addNewNotification({
+                newNotification,
+                curUser: userInfo,
+              })
             );
         }
       );

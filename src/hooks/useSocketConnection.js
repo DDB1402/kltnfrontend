@@ -27,7 +27,7 @@ export const useSocketConnection = () => {
         token: accessToken,
       });
       MAIN_SOCKET.once(SOCKET_ON_ACTIONS.AUTHEN_SUCCESS, () => {
-        // console.log("success");
+        console.log("success");
         USER_SOCKET.disconnect();
         CONVERSATION_SOCKET.disconnect();
         NOTIFICATION_SOCKET.disconnect();
